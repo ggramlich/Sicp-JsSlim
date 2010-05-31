@@ -1,0 +1,2 @@
+!define TEST_SYSTEM {slim}
+!define COMMAND_PATTERN (java -cp ${FITNESSE_ROOTPATH}/jsSlim.jar jsSlim.JsSlimService -i ${FITNESSE_ROOTPATH}/fixtures)
