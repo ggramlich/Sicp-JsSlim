@@ -1,4 +1,6 @@
-var SICP = {
+var SICPconstructor = (function() {
+var constructor = function () {};
+var self = {
 	square: function (x) {
 		return x*x;
 	},
@@ -16,11 +18,9 @@ var SICP = {
 	},
 	
 	fixedPoint: function (f, start, tolerance) {
-		with (SICP) {
-			function closeEnough (x, y) {
-				return (abs(x - y) < tolerance);
-			};
-		}
+		function closeEnough (x, y) {
+			return (self.abs(x - y) < tolerance);
+		};
 		function iter (oldVal, newVal) {
 			return (closeEnough(oldVal, newVal)) ? newVal : iter(newVal, f(newVal));
 		};
@@ -40,3 +40,7 @@ var SICP = {
 		return constructor;
 	}
 };
+constructor.prototype = self;
+return constructor;
+})();
+var SICP = new SICPconstructor();
