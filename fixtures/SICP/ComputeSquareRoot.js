@@ -1,7 +1,8 @@
 SICP.ComputeSquareRoot = SICP.createDecistionTableFixture(function (_precision) {
 	with (SICP) {
+		this.setPrecision(square(_precision));
 		this.testFunction = function (x) {
-			var precision = square(_precision);
+			var precision = this.precision;
 			var sqrtIter = function (guess, x) {
 				return goodEnough(guess, x) ? guess : sqrtIter(improve(guess, x), x);
 			};
