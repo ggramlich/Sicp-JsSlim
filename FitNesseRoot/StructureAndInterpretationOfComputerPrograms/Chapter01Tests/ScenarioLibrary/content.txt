@@ -7,6 +7,5 @@
 |start   |namespace                      |
 |check   |sqrt              |@x|@result  |
 
-|scenario|the fixed point of |function|is                        |result                       |
-|define  |computeFixedPoint  |as      |function() {return fixedPoint(@function, 1, precision);}|
-|check   |compute fixed point|@result                                                          |
+|scenario|the fixed point of|function                           |is|result|
+|check   |evaluate          |fixedPoint(@function, 1, precision)|@result  |

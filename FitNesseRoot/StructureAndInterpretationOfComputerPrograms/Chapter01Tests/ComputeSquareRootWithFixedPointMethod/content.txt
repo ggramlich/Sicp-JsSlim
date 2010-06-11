@@ -1,9 +1,9 @@
-|script              |
+|script        |
 |define|sqrt|as|!-function (x) {
 	var improve = function (guess) {
 		return average(guess, x / guess);
 	};
-	return fixedPoint(improve, 1, this.precision);
+	return fixedPoint(improve, 1, precision);
 }-!|
 
 |the square root of is|
