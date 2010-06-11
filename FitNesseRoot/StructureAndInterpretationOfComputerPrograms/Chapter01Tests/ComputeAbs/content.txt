@@ -1,6 +1,9 @@
-|compute abs |
-|x   |result?|
-|0   |0      |
-|-1  |1      |
-|1   |1      |
-|-.12|0.12   |
+!|scenario|the absolute value of|x |is|result|
+|check    |abs                  |@x|@result  |
+
+|the absolute value of is|
+|x          |result      |
+|0          |0           |
+|-1         |1           |
+|1          |1           |
+|-.12       |0.12        |

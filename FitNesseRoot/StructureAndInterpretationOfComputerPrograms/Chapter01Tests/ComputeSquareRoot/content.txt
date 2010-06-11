@@ -1,6 +1,11 @@
-|compute square root|0.0000001   |
-|x                  |result?     |
-|0                  |~=0.00000   |
-|1                  |~=1.00000   |
-|2                  |~=1.41421356|
+|script                                                                                                         |
+|define|goodEnough|as|function (guess, x) {return (abs(square(guess) - x) < precision)}                         |
+|define|improve   |as|function (guess, x) {return average(guess, x / guess)}                                    |
+|define|sqrtIter  |as|function (guess, x) {return goodEnough(guess, x) ? guess : sqrtIter(improve(guess, x), x)}|
+|define|sqrt      |as|function (x) {return sqrtIter(1, x)}                                                      |
 
+|the square root of is|
+|x    |result         |
+|0    |~=0.00000      |
+|1    |~=1.00000      |
+|2    |~=1.41421356   |

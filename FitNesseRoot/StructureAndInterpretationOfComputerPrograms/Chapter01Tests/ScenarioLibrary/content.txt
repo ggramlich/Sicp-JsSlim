@@ -1,0 +1,12 @@
+|scenario          |the square root of|x |with precision|precision|is|result|
+|start             |namespace                                               |
+|define            |precision         |as|@precision                        |
+|the square root of|@x                |is|@result                           |
+
+|scenario|the square root of|x |is|result|
+|start   |namespace                      |
+|check   |sqrt              |@x|@result  |
+
+|scenario|the fixed point of |function|is                        |result                       |
+|define  |computeFixedPoint  |as      |function() {return fixedPoint(@function, 1, precision);}|
+|check   |compute fixed point|@result                                                          |

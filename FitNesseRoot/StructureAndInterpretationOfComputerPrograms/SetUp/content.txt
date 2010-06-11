@@ -1,0 +1,33 @@
+|script                                                      |
+|clean namespace                                             |
+|define|precision |as|0.000000000001                         |
+|define|square    |as|function (x) {return x*x;}             |
+|define|abs       |as|function (x) {return (x < 0) ? -x : x;}|
+|define|average   |as|function (x, y) {return (1.0*x+y) / 2;}|
+|define|fixedPoint|as                                        |!-function (f, start, tolerance) {
+	var depth = 0;
+	function closeEnough (x, y) {
+		return (abs(x - y) < tolerance);
+	};
+	function iter (oldVal, newVal) {
+		if (depth++ > 100) return newVal;
+		return (closeEnough(oldVal, newVal)) ? newVal : iter(newVal, f(newVal));
+	};
+	return iter(start, f(start));
+}-!|
+|define|restrict|as|!-function (func, position, value) {
+	return function() {
+		var args = [];
+		for (var i=0; i < position - 1; i++) {
+			args.push(arguments[i]);
+		};
+		args.push(value);
+		for (var i = position - 1; i < arguments.length; i++) {
+			args.push(arguments[i]);
+		};
+		return func.apply(this, args);
+	};
+}-!|
+
+|script         |
+|start|namespace|

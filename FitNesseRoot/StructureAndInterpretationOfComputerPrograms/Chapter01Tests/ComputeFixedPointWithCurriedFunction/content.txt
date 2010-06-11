@@ -1,0 +1,14 @@
+Curry (restrict) function
+
+|the fixed point of is                                                |
+|function                                                |result      |
+|restrict(function (x, y) {return average(y, x/y)}, 1, 2)|~=1.41421356|
+|restrict(function (y, x) {return average(y, x/y)}, 2, 9)|3           |
+
+Curry (restrict) function with reverse order of arguments
+
+|comment                                                        |
+|script           |compute fixed point    |0.0000000000001      |
+|set function     |function (y, x) {return SICP.average(y, x/y)}|
+|restrict argument|2                      |to         |9        |
+|check            |result                 |3                    |

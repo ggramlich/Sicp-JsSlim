@@ -1,6 +1,9 @@
-|compute square|
-|x   |result?  |
-|0   |0        |
-|1   |1        |
-|2   |4        |
-|-3  |9        |
+!|scenario|the square of|x |is|result|
+|check    |square       |@x|@result  |
+
+|the square of is|
+|x     |result   |
+|0     |0        |
+|1     |1        |
+|2     |4        |
+|-3    |9        |

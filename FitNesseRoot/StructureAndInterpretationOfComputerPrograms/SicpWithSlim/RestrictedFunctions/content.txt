@@ -1,0 +1,20 @@
+You can define restrictions of a function by calling the restrict method which is defined in the
+[[global setup][<StructureAndInterpretationOfComputerPrograms.SetUp]].
+In functional programming, this is often referred to as currying.
+
+The method signature is restrict(func, position, value). The argument position count starts from 1.
+
+|script                                 |
+|define|cube|as|restrict(Math.pow, 2, 3)|
+|check |cube|1 |1                       |
+|check |cube|2 |8                       |
+|check |cube|3 |27                      |
+|check |cube|4 |64                      |
+
+|script                                   |
+|define|expTwo|as|restrict(Math.pow, 1, 2)|
+|check |expTwo|0 |1                       |
+|check |expTwo|1 |2                       |
+|check |expTwo|2 |4                       |
+|check |expTwo|3 |8                       |
+|check |expTwo|8 |256                     |

@@ -3,3 +3,6 @@
 
 |library       |
 |function store|
+
+|script                 |
+|set print enabled|false|
