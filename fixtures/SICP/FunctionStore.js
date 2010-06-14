@@ -1,13 +1,15 @@
 SICP.FunctionStore = (function () {
+	// The SICP.FunctionStore is a constructor function
+	// that extends the SICP.constructor.
+	// JsSlim instantiates an object by calling this constructor.
 	var self = function () {
-		var isPrintEnabled = false;
 		with (SICP.namespace) {
 			this.evaluate = function (expression) {
 				return eval("(" + expression + ")");
 			}
 		}
 		this.defineAs = function (name, expression) {
-			this.log(name + " = " + expression + "\n");
+			this.log(name + " = " + expression);
 			SICP.namespace[name] = this.evaluate(expression);
 			return true;
 		}
@@ -15,7 +17,7 @@ SICP.FunctionStore = (function () {
 			if ('undefined' == typeof SICP.namespace[name]) {
 				return false;
 			}
-			this.log("Deleting: " + name + ": " + SICP.namespace[name] + "\n");
+			this.log("Deleting: " + name + ": " + SICP.namespace[name]);
 			delete SICP.namespace[name];
 			return true;
 		}
@@ -24,14 +26,6 @@ SICP.FunctionStore = (function () {
 				this.deleteDefinitionOf(name);
 			}
 			return true;
-		}
-		this.log = function (string) {
-			if (isPrintEnabled) {
-				print(string);
-			}
-		}
-		this.setPrintEnabled = function (enable) {
-			isPrintEnabled = JsSlim.Converter.toBool(enable);
 		}
 	};
 	constructor = JsSlim.extend(SICP.constructor, self);
