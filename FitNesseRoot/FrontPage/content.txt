@@ -1,6 +1,17 @@
 !1 Welcome to [[FitNesse][FitNesse.FitNesse]]!
 !3 ''The fully integrated stand-alone acceptance testing framework and wiki.''
 
-StructureAndInterpretationOfComputerPrograms
+These test pages are my attempt to implement the algorithms described in the video lectures and the Book [[Structure and Interpretation of Computer Programs][StructureAndInterpretationOfComputerPrograms]] (SICP) by Abelson and Sussman in an acceptance test driven way.
+I use the functional language that I know best: !-JavaScript-!. And it turns out that it is very easy to dynamically create new functions on the wiki pages, even though it is not easy to debug them.
+
+To run the tests, put the fitnesse.jar and the jsSlim.jar in the folder that contains the !-FitNesseRoot-! and the fixtures folder, then start fitnesse from there with
+{{{
+java -jar fitnesse.jar -p 8070 -e 0
+}}}
+and browse to http://localhost:8070
+
+The base suite is StructureAndInterpretationOfComputerPrograms.
+
+In StructureAndInterpretationOfComputerPrograms.SicpWithSlim the basic functionality of the SICP test system is described.
 
 !note Release v20100303

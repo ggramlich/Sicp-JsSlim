@@ -1,8 +1,12 @@
-You can define restrictions of a function by calling the restrict method which is defined in the
+You can define restrictions of a function by calling the restrict function which is defined in the
 [[global setup][<StructureAndInterpretationOfComputerPrograms.SetUp]].
 In functional programming, this is often referred to as currying.
 
 The method signature is restrict(func, position, value). The argument position count starts from 1.
+
+We restrict the javascript function Math.pow(base, exp).
+When we fix the exp argument, we get a polynomial function.
+Define cube(x) = x^3 = pow(x, 3).
 
 |script                                 |
 |define|cube|as|restrict(Math.pow, 2, 3)|
@@ -11,6 +15,9 @@ The method signature is restrict(func, position, value). The argument position c
 |check |cube|3 |27                      |
 |check |cube|4 |64                      |
 
+When we fix the base argument, we get an exponential function.
+Define expTwo(x) = 2^x = pow(2, x).
+
 |script                                   |
 |define|expTwo|as|restrict(Math.pow, 1, 2)|
 |check |expTwo|0 |1                       |
@@ -18,3 +25,11 @@ The method signature is restrict(func, position, value). The argument position c
 |check |expTwo|2 |4                       |
 |check |expTwo|3 |8                       |
 |check |expTwo|8 |256                     |
+
+We can also restrict functions that we defined ourselves.
+
+|script                                                                                                 |
+|define|charAt         |as     |function (string, charPosition) {return string.charAt(charPosition - 1)}|
+|define|fourthCharacter|as     |restrict(charAt, 2, 4)                                                  |
+|check |fourthCharacter|abcdefg|d                                                                       |
+|check |fourthCharacter|ab     |                                                                        |

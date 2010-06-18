@@ -1,0 +1,68 @@
+To pass a function as an argument to a defined function is a little tricky.
+
+|script                                                  |
+|define|doubleResult|as|function (func) {return 2*func()}|
+|define|getThree    |as|function () {return 3}           |
+
+The following attempts do not work, since the argument that is passed to doubleResult(func) is passed in as a string.
+
+|comment                                   |
+|script                                    |
+|check|doubleResult|getThree             |6|
+|check|doubleResult|function() {return 4}|8|
+
+You can use the evaluate method of the function store to get around this problem:
+
+!|script                                             |
+|check|evaluate|doubleResult(getThree)             |6|
+|check|evaluate|doubleResult(function() {return 4})|8|
+
+Another way around the problem is to define a temporary function just for the purpose of evaluating and checking.
+
+|script                                                                  |
+|define              |temp|as|function () {return doubleResult(getThree)}|
+|check               |temp|6                                             |
+|delete definition of|temp                                               |
+
+This seems a bit too complicated, but it plays nicely with scenarios and closures to pass through arguments to the inner function.
+
+So let's define a function that applies a function that is passed in as a parameter to the rest of its arguments.
+
+|script                                                                                 |
+|define|concatDecorated|as |function (decorate, x, y) {return decorate(x) + decorate(y)}|
+|define|toUpper        |as |function (string) {return string.toUpperCase()}             |
+|check |toUpper        |xyz|XYZ                                                         |
+|define|firstLetter    |as |function (string) {return string.charAt(0);}                |
+|check |firstLetter    |xyz|x                                                           |
+
+Define the scenario with three alternative ways of evaluation.
+
+|scenario            |when we decorate|first                                                    |and    |second |with|decorate|and concatenate, we get|result|
+|define              |temp            |as                                                       |function (a, b) {return concatDecorated(@decorate, a, b)}   |
+|check               |temp;           |@first                                                   |@second|@result                                             |
+|delete definition of|temp                                                                                                                                   |
+|#                   |we double check with the evaluate method (observe the double quotes)                                                                   |
+|check               |evaluate        |concatDecorated(@decorate, "@first", "@second")          |@result                                                     |
+|#                   |we can also use evaluateOn with an anonymous curried function                                                                          |
+|check               |evaluate on;    |function (a, b) {return concatDecorated(@decorate, a, b)}|@first |@second|@result                                     |
+
+
+Now we use the scenario in a decision table.
+
+|when we decorate and with and concatenate, we get                              |
+|first|second|decorate                                                   |result|
+|abc  |xyz   |toUpper                                                    |ABCXYZ|
+|abc  |xyz   |firstLetter                                                |ax    |
+|abc  |xyz   |function (string) {return string.charAt(string.length - 1)}|cz    |
+
+We can also explicitely evaluate the passed in function in the body of the calling function. This assumes explicitely that the passed in function is a string.
+After calling the FunctionStore method defineEvaluate(), the evaluate method is also available in the namespace.
+
+!|script                                                                                |
+|reject|is          |evaluate             |defined                                      |
+|define evaluate                                                                        |
+|ensure|is          |evaluate             |defined                                      |
+|define|doubleResult|as                   |function (func) {return 2 * evaluate(func)()}|
+|check |doubleResult|getThree             |6                                            |
+|check |doubleResult|function() {return 4}|8                                            |
+

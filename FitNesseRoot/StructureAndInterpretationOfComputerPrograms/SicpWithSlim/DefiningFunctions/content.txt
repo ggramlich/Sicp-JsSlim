@@ -1,0 +1,40 @@
+You can define functions by calling the defineAs(name, expression) method of the FunctionStore fixture which is declared as a library in the [[suite setup][<StructureAndInterpretationOfComputerPrograms.SuiteSetUp]].
+
+|script                                         |
+|define|product |as|function (x, y) {return x*y}|
+|check |product;|4 |7            |28            |
+
+You can query whether a function is actually defined by the isDefined(name) method:
+
+|script                           |
+|ensure|is defined|product        |
+|ensure|is        |product|defined|
+|reject|is        |concat |defined|
+
+Observe that all the arguments passed to a function are passed in as strings, which might lead to some problems, if you do not remember to handle this.
+
+|script                                            |
+|define|concat |as|function (x, y) {return x+y}    |
+|check |concat;|1 |2              |12              |
+|define|sum    |as|function (x, y) {return 1*x+1*y}|
+|check |sum;   |1 |2              |3               |
+
+You can override function definitions.
+
+|script                                                 |
+|define|concat |as|function (x, y) {return x + ", " + y}|
+|check |concat;|1 |2                |1, 2               |
+
+You can even delete existing definitions.
+
+|script                                        |
+|ensure              |is defined|concat        |
+|delete definition of|concat                   |
+|reject              |is        |concat|defined|
+
+You can clean the complete namespace with the cleanNamespace() method.
+
+|script               |
+|ensure|is defined|sum|
+|clean namespace      |
+|reject|is defined|sum|
