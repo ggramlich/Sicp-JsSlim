@@ -1,0 +1,7 @@
+!|script                                                                             |
+|define|inc                |as|function (x) {return 1+x*1.0}                         |
+|define|compose            |as|function (f, g) {return function (x) {return f(g(x))}}|
+|define|incrementThenSquare|as|compose(square, inc)                                  |
+|define|squareThenIncrement|as|compose(inc, square)                                  |
+|check |incrementThenSquare|3 |16                                                    |
+|check |squareThenIncrement|3 |10                                                    |

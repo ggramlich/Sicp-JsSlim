@@ -1,0 +1,73 @@
+Following the ideas from chapter 1.3.1, we define arbitrary sums:
+
+!include <StructureAndInterpretationOfComputerPrograms.FunctionsLibrary.SumDefinition
+
+|scenario|the sum of|term                                               |from|a|to|b|incremented by|next|is|result|
+|check   |evaluate  |function () {return sigma(@term, @a, @next, @b)} ()|~=@result                                |
+
+Now compute $\Sigma_{n=a}^b n$.
+
+|script                                 |
+|define|id |as|function (x) {return x}  |
+|define|inc|as|function (x) {return 1+x}|
+
+|the sum of from to incremented by is|
+|term   |a   |b    |next   |result   |
+|id     |1   |1    |inc    |1        |
+|id     |1   |2    |inc    |3        |
+|id     |1   |3    |inc    |6        |
+|id     |1   |4    |inc    |10       |
+|id     |1   |10   |inc    |55       |
+|id     |8   |10   |inc    |27       |
+
+And the cube sums
+
+|script                                     |
+|define|cube|as|function (x) {return x*x*x;}|
+
+|the sum of from to incremented by is|
+|term    |a   |b   |next   |result   |
+|cube    |1   |1   |inc    |1        |
+|cube    |1   |2   |inc    |9        |
+|cube    |1   |3   |inc    |36       |
+|cube    |2   |3   |inc    |35       |
+
+Approximation of $\pi$
+
+|script         |
+|define|piSum|as|!-function (a, b) {
+	function piTerm (x) {
+		x = 1.0 * x;
+		return 1 / (x * (2.0 + x));
+	}
+	function piNext (x) {
+		return 1.0 * x + 4;
+	}
+	return 8 * sigma(piTerm, a, piNext, b);
+}-!|
+
+|script                        |
+|check|pi sum;|1|1    |~=2.667 |
+|check|pi sum;|1|10   |~=2.976 |
+|check|pi sum;|1|100  |~=3.1216|
+|check|pi sum;|1|1000 |~=3.1396|
+|check|pi sum;|1|10000|~=3.1414|
+
+Where Lisp uses lambdas, you can use anonymous functions in javascript.
+
+|script             |
+|define|piSumAnon|as|!-function (a, b) {
+	return 8 * sigma(
+		function (x) {return 1 / (x * (2.0 + 1.0 * x))},
+		a,
+		function (x) {return 1.0 * x + 4},
+		b
+	);
+}-!|
+
+|script                             |
+|check|pi sum anon;|1|1    |~=2.667 |
+|check|pi sum anon;|1|10   |~=2.976 |
+|check|pi sum anon;|1|100  |~=3.1216|
+|check|pi sum anon;|1|1000 |~=3.1396|
+|check|pi sum anon;|1|10000|~=3.1414|

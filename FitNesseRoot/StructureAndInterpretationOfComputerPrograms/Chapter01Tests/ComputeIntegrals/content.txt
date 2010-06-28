@@ -1,0 +1,49 @@
+We use the sigma (sum) function as a building block to approximate integrals.
+
+!include -c <StructureAndInterpretationOfComputerPrograms.FunctionsLibrary.SumDefinition
+
+|script            |
+|define|integral|as|!-function (f, a, b, dx) {
+	return dx * sigma(
+		f,
+		1.0 * a + dx/2.0,
+		function (x) {return 1.0 * x + 1.0 * dx},
+		1.0 * b
+	)
+}-!|
+|define|cube|as|function (x) {return x * x * x}|
+
+Now let us approximate the integral of cube from 0 to 1 = 1/4.
+
+|scenario|the integral of|function                                                  |from|a |to |b|with dx|dx|is|result|
+|check   |evaluate on;   |function (a, b, dx) {return integral(@function, a, b, dx)}|@a  |@b|@dx|@result               |
+
+
+|script                                                      |
+|the integral of|cube|from|0|to|1|with dx|0.1  |is|~=0.2487  |
+|the integral of|cube|from|0|to|1|with dx|0.01 |is|~=0.24999 |
+|the integral of|cube|from|0|to|1|with dx|0.001|is|~=0.250000|
+
+Solution to Exercise 1.29 Simpson's Rule for integral computation.
+
+|script                   |
+|define|simpsonIntegral|as|!-function (f, a, b, n) {
+	var h = (b - a) / n;
+	function y(k) {return f(1.0 * a + k * h)}
+	function sumIter(k) {
+		k = k * 1.0;
+		if (k >= n) {return 0}
+		return 4*y(k) + 2*y(k+1) + sumIter(k+2);
+	}
+	return h/3 * (y(0) + sumIter(1) + y(n));
+}-!|
+
+|scenario|the simpson integral of|function                                                       |from|a |to|b|with n|n|is|result|
+|check   |evaluate on;           |function (a, b, n) {return simpsonIntegral(@function, a, b, n)}|@a  |@b|@n|@result             |
+
+
+|script                                                           |
+|the simpson integral of|cube|from|0|to|1|with n|10  |is|~=0.3167 |
+|the simpson integral of|cube|from|0|to|1|with n|100 |is|~=0.2567 |
+|the simpson integral of|cube|from|0|to|1|with n|1000|is|~=0.25067|
+

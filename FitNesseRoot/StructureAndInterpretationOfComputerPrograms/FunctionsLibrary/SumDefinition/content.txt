@@ -1,0 +1,13 @@
+!|script        |
+|define|sigma|as|!-function (term, a, next, b) {
+	// stay independent from the global declaration
+	// use a private name
+	var count = 0;
+	function mysum (term, a, next, b) {
+		// Safety net for endless loops
+		if (count++ > 1000000) return 0;
+		if (a>b) {return 0;}
+		return term(a) + mysum(term, next(a), next, b);
+	}
+	return mysum(term, a, next, b);
+}-!|

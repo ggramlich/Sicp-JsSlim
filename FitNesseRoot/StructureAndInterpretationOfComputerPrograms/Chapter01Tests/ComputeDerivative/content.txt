@@ -1,0 +1,21 @@
+!|script                                    |
+|define|cube |as|function (x) {return x*x*x}|
+|define|deriv|as                            |!-function (g) {
+	var dx = 0.00001;
+	return function (x) {
+		return (g(1.0*x + dx) - g(1.0*x)) / dx
+	}
+}-!|
+
+|scenario            |the derivative of|g |at|x|is|result|
+|define              |temp             |as|deriv(@g)     |
+|check               |temp             |@x|~=@result     |
+|delete definition of|temp                               |
+
+|script                                        |
+|the derivative of|cube    |at|5     |is|75.000|
+|the derivative of|Math.sin|at|3.1416|is|-1.00 |
+|the derivative of|Math.sin|at|0     |is|1.00  |
+|the derivative of|Math.cos|at|0     |is|0.00  |
+|the derivative of|Math.cos|at|3.1416|is|0.00  |
+
